@@ -4,6 +4,11 @@
 
 Permadeath is a mod developed to add an extra layer of challenge. In this mod, if your character dies, all your items, including equipped gear, and all five companion Pals, who accompany you in the world, will be deleted.
 
+## Download
+
+In Nexus Mods: <https://www.nexusmods.com/palworld/mods/309?tab=files>
+In Releases: <https://github.com/Diegiwg/PermadeathMod/releases>
+
 ## Installation
 
 1. To install, you first need UE4SS (<https://github.com/UE4SS-RE/RE-UE4SS/releases>).
