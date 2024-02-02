@@ -1,6 +1,6 @@
 # Palworld Mod - Permadeath
 
-Permadeath is a mod designed to make your game more challenging by introducing the rule that if your character dies, all items, including equipped ones, will be deleted.
+Permadeath is a mod developed to add an extra layer of challenge. In this mod, if your character dies, all your items, including equipped gear, and all five companion Pals, who accompany you in the world, will be deleted.
 
 ## Installation
 
@@ -11,11 +11,17 @@ Permadeath is a mod designed to make your game more challenging by introducing t
 
 ## Changelog
 
+### v0.0.2-dev
+
+In this version, a rule has been added that when your character dies, the five Pals that accompany you in the world will also be deleted.
+
+BUG-1: The image of the Pals will continue to exist in your UI until you exit and re-enter the world or capture a new friendly Pal.
+
 ### v0.0.1-dev-1
 
 In this version, when your character dies, all items, including equipped ones, will be deleted.
 
-BUG-1: Equipped items appear as 'ghosts' on your character, but have no practical effect on stats.
+BUG-1: Equipped items appear as 'ghosts' on your character but have no practical effect on stats.
 
 ## Credits
 
