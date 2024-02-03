@@ -1,0 +1,15 @@
+[bool]
+Enabled=true
+; Configuration to control the Global Activation of the Mod
+
+[bool]
+ClearInventory=true
+; Configuration to control the Clear Inventory Function when the Character Dies.
+
+[bool]
+ClearPals=true
+; Configuration to control the Clear Friendly Pals Function when the Character Dies.
+
+[bool]
+DevMode=false
+; Configuration to control the Developer Mode.

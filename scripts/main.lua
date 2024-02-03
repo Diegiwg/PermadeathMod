@@ -1,7 +1,8 @@
+PalLib = require("PalLib")
+
 local ModID = "PermadeathMod"
-local ModVersion = "0.0.2-dev"
+local ModVersion = "0.0.3"
 local ModInitialized = false
-local ModDevMode = false
 
 --- @class ABP_Player_Female_C
 local PlayerObj = nil
@@ -9,11 +10,16 @@ local PlayerObj = nil
 --- @class APlayerState
 local PlayerState = nil
 
-local function log(msg)
-    print("-----------------------------------------")
-    print("[" .. ModID .. " - v" .. ModVersion .. "] " .. msg)
-    print("-----------------------------------------")
-end
+PalLib.Use(ModID, ModVersion)
+
+local Config = PalLib.Config.Load(ModID)
+if not Config then return PalLib.Log("Config not loaded for " .. ModID) end
+
+if Config.Enabled ~= true then return PalLib.Log(ModID .. " is not enabled in config file.") end
+if Config.ClearInventory == nil then return PalLib.Log("ClearInventory is not set in config file.") end
+if Config.ClearPals == nil then return PalLib.Log("ClearPals is not set in config file.") end
+
+if Config.DevMode == nil then Config.DevMode = false end
 
 local function clear_inventory()
     if PlayerObj and PlayerObj:IsValid() then
@@ -39,10 +45,10 @@ local function clear_otomo_pals()
 
         if not pal or not pal.Handle:IsValid() then return end
 
-        if ModDevMode then log("Pal: " .. pal:GetFullName()) end
+        if Config.DevMode then PalLib.Log("Pal: " .. pal:GetFullName()) end
 
         if pal.Handle:IsValid() then
-            if ModDevMode then log("Deleting pal") end
+            if Config.DevMode then PalLib.Log("Deleting pal") end
             pal.Handle:TryGetIndividualActor().SetActiveActor(false)
         end
         
@@ -54,7 +60,7 @@ end
 local function init()
     local CharacterInstance = FindFirstOf("BP_Player_Female_C")
     if not CharacterInstance:IsValid() then
-        log("Init failed.")
+        PalLib.Log(ModID .." init failed.")
         return
     else
         PlayerObj = CharacterInstance
@@ -63,34 +69,37 @@ local function init()
 
     RegisterHook("/Game/Pal/Blueprint/Status/BP_Status_Dying.BP_Status_Dying_C:TickStatus",
         function(self, dt)
-            clear_inventory()
-            clear_otomo_pals()
+            if Config.ClearInventory then clear_inventory() end
+            if Config.ClearPals then clear_otomo_pals() end
     end)
 
     ModInitialized = true
-    log("Init succeeded.")
+    PalLib.Log(string.format("%s init succeeded.\nConfigs:\n\tClearInventory: %s\n\tClearPals: %s", ModID, Config.ClearInventory,
+        Config.ClearPals))
 end
 
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(Context)
     init()
 end)
 
--- Only for help in development
-if ModDevMode then
+-- Only for help in development --
+if Config.DevMode then
 
 RegisterKeyBind(Key.N, function()
     if ModInitialized == false then init() end
 end)    
 
 RegisterKeyBind(Key.Y, function()
-    if PlayerObj and PlayerObj:IsValid() then log("Player: " .. PlayerObj:GetFullName()) end
-    if PlayerState and PlayerState:IsValid() then log("PlayerState: " .. PlayerState:GetFullName()) end
+    local config = PalLib.Config.Load(ModID)
+        if not config then return end
 
-    clear_otomo_pals()
+    for key, value in pairs(config) do
+        PalLib.Log(string.format("%s: %s", key, value))
+    end
 end)
 
 local function create_item(item_ref, id, count)
-    log("Creating item: " .. id)
+    PalLib.Log("Creating item: " .. id)
     item_ref.StackCount = count
     item_ref.ItemId.StaticId = FName(id)
     item_ref.ItemId.DynamicId = {
@@ -101,7 +110,7 @@ end
 
 RegisterKeyBind(Key.V, function()
     local container = PlayerState.InventoryData.InventoryMultiHelper.Containers[1]
-    log(container:GetFullName())
+    PalLib.Log(container:GetFullName())
 
     container.ItemSlotArray:ForEach(function(index, elem)
         local item = elem:get()
@@ -114,7 +123,7 @@ RegisterKeyBind(Key.V, function()
         if index == 7 then return create_item(item, "Fiber", 10) end
         
         local name = item.ItemId.StaticId:ToString()
-        if name ~= "None" then return log(name) end
+        if name ~= "None" then return PalLib.Log(name) end
     end)
 end)
 

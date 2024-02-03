@@ -6,17 +6,31 @@ Permadeath is a mod developed to add an extra layer of challenge. In this mod, i
 
 ## Download
 
-In Nexus Mods: <https://www.nexusmods.com/palworld/mods/309?tab=files>
-In Releases: <https://github.com/Diegiwg/PermadeathMod/releases>
+On Nexus Mods: <https://www.nexusmods.com/palworld/mods/309?tab=files>
+On Releases: <https://github.com/Diegiwg/PermadeathMod/releases>
 
 ## Installation
 
 1. To install, you first need UE4SS (<https://github.com/UE4SS-RE/RE-UE4SS/releases>).
-2. Copy the **'PermadeathMod'** folder into the *Mods* folder of **UE4SS**.
-3. Edit the *mods.txt* file and add the line **'PermadeathMod : 1'**.
-4. Open your game and be careful not to die.
+2. Ensure that the **PalLib** mod (<https://www.nexusmods.com/palworld/mods/380>) is installed.
+3. Copy the **'PermadeathMod'** folder into the *Mods* folder of **UE4SS**.
+4. Edit the *mods.txt* file and add the line **'PermadeathMod : 1'**.
+5. Open your game and be careful not to die.
+
+## Configuration
+
+The **PermadeathMod** mod has a configuration file (config.txt) with the following options:
+
+1. **Enabled** - Enables or disables the mod.
+2. **ClearInventory** - Enables or disables inventory clearing.
+3. **ClearPals** - Enables or disables Pal clearing.
+4. **DevMode** - Enables or disables developer mode.
 
 ## Changelog
+
+### v0.0.3
+
+In this version, the **PalLib** mod is now used to provide configuration options.
 
 ### v0.0.2-dev
 
